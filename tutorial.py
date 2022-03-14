@@ -9,6 +9,14 @@ WIDTH, HEIGHT = 1000, 800
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 
 
+def calculate_distance(p1, p2):
+    return math.sqrt((p2[1] - p1[1])**2 + (p2[0] - p1[0])**2)
+
+
+def calculate_angle(p1, p2):
+    return math.atan2(p2[1] - p1[1], p2[0] - p1[0])
+
+
 def draw(space, window, draw_options):
     window.fill("white")
     space.debug_draw(draw_options)
@@ -63,6 +71,8 @@ def run(window, width, height):
             if event.type == pygame.QUIT:
                 run = False
                 break
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                ball.body.apply_impulse_at_local_point((10000,0), (0,0))
         
         draw(space, window, draw_options)
         space.step(delta_time)
